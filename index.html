@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gửi tvy (nhims) Yêu Của Anh ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
+            overflow-x: hidden;
+        }
+        .font-love {
+            font-family: 'Dancing Script', cursive;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fce4ec;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f48fb1;
+            border-radius: 10px;
+        }
+
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: floatUp 8s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .perspective {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            backface-visibility: hidden;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            cursor: pointer;
+        }
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #f48fb1;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #ec407a;
+            transform-origin: top;
+            transition: transform 0.5s ease 0.3s, z-index 0.2s;
+            z-index: 3;
+        }
+        .envelope.open::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+        .envelope-pocket {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid #f06292;
+            border-right: 150px solid #f06292;
+            border-bottom: 110px solid #e91e63;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            z-index: 2;
+        }
+        .letter-content {
+            position: absolute;
+            bottom: 10px;
+            left: 15px;
+            right: 15px;
+            height: 170px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.5s ease;
+            z-index: 2;
+        }
+        .envelope.open .letter-content {
+            transform: translateY(-120px);
+            z-index: 4;
+        }
+
+        /* MARQUEE CAROUSEL */
+        .marquee-wrapper {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            padding: 20px 0;
+        }
+        .marquee-track {
+            display: flex;
+            gap: 24px;
+            width: max-content;
+            animation: scrollHorizontal 25s linear infinite;
+        }
+        .marquee-wrapper:hover .marquee-track {
+            animation-play-state: paused;
+        }
+        .marquee-card {
+            width: 280px;
+            height: 400px;
+            background: white;
+            border-radius: 24px;
+            padding: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+            border: 2px solid #fbcfe8;
+            flex-shrink: 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .marquee-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(236,72,153,0.25);
+        }
+
+        @keyframes scrollHorizontal {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* POLAROID CALENDAR */
+        .polaroid-frame {
+            background: white;
+            padding: 10px 10px 25px 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            border-radius: 6px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+        .polaroid-frame:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+            z-index: 20;
+        }
+        .pin-gold {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #fde047 0%, #ca8a04 100%);
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .drawn-heart-container {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        .drawn-heart-svg {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        /* LOCKSCREEN PIN */
+        .pin-btn {
+            background: #f5f5f7;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            color: #374151;
+            transition: all 0.15s ease;
+        }
+        .pin-btn:active {
+            background: #e5e7eb;
+            transform: scale(0.95);
+        }
+
+        .secret-btn-container {
+            position: relative;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* NIGHT GARDEN STYLES */
+        #night-garden-section {
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            position: relative;
+            overflow: hidden;
+            min-height: 85vh;
+            border-radius: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .firefly {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fef08a;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fde047, 0 0 20px #fde047;
+            animation: flyAround 10s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes flyAround {
+            0%, 100% { transform: translate(0, 0) scale(0.8); opacity: 0.3; }
+            25% { transform: translate(30px, -50px) scale(1.2); opacity: 0.9; }
+            50% { transform: translate(-20px, -100px) scale(0.6); opacity: 0.4; }
+            75% { transform: translate(40px, -150px) scale(1.1); opacity: 1; }
+        }
+
+        .msg-bubble {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.92);
+            color: #ec407a;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(236,72,153,0.3);
+            animation: floatUpMsg 12s linear infinite;
+            pointer-events: auto;
+            white-space: nowrap;
+            z-index: 15;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(244, 143, 177, 0.4);
+            transition: transform 0.2s;
+        }
+        .msg-bubble:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .floating-photo {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: 2px solid #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            object-fit: cover;
+            animation: floatUpMsg 14s linear infinite;
+            z-index: 14;
+            transform: rotate(6deg);
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        @keyframes floatUpMsg {
+            0% {
+                transform: translateY(100%) scale(0.7) rotate(-5deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.95;
+            }
+            85% {
+                opacity: 0.95;
+            }
+            100% {
+                transform: translateY(-600%) scale(1.1) rotate(10deg);
+                opacity: 0;
+            }
+        }
+
+        .garden-menu {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+            z-index: 30;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+        .menu-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .menu-btn:hover {
+            background: rgba(236,72,153,0.8);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="relative text-gray-800">
+
+    <!-- MÀN HÌNH KHÓA BẢO MẬT (0804) -->
+    <div id="lockscreen" class="fixed inset-0 bg-pink-100/90 backdrop-blur-xl z-50 flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="bg-white/90 backdrop-blur-md rounded-3xl shadow-2xl border-4 border-white max-w-2xl w-full p-6 md:p-8 grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+            
+            <div class="h-80 md:h-96 rounded-2xl overflow-hidden shadow-md border-2 border-pink-100 bg-pink-50">
+                <img src="./h8.jpeg" alt="Công Chúa" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./h8.jpg';">
+            </div>
+
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <h3 class="text-pink-600 font-bold text-lg md:text-xl text-center">Hãy nhập ngày sinh của công chúa</h3>
+                
+                <div class="w-full bg-amber-100/70 rounded-xl h-12 flex items-center justify-center tracking-[0.5em] text-2xl font-bold text-amber-800 shadow-inner px-4 overflow-hidden" id="pass-display">
+                    <span id="pass-dots" class="text-pink-600"></span>
+                </div>
+
+                <p id="pass-error" class="text-xs text-rose-500 font-semibold h-4 text-center"></p>
+
+                <div class="grid grid-cols-3 gap-3 w-full max-w-[240px]">
+                    <button onclick="pressNum('1')" class="pin-btn h-12">1</button>
+                    <button onclick="pressNum('2')" class="pin-btn h-12">2</button>
+                    <button onclick="pressNum('3')" class="pin-btn h-12">3</button>
+                    <button onclick="pressNum('4')" class="pin-btn h-12">4</button>
+                    <button onclick="pressNum('5')" class="pin-btn h-12">5</button>
+                    <button onclick="pressNum('6')" class="pin-btn h-12">6</button>
+                    <button onclick="pressNum('7')" class="pin-btn h-12">7</button>
+                    <button onclick="pressNum('8')" class="pin-btn h-12">8</button>
+                    <button onclick="pressNum('9')" class="pin-btn h-12">9</button>
+                    <button onclick="clearNum()" class="pin-btn h-12 text-pink-500 font-bold">C</button>
+                    <button onclick="pressNum('0')" class="pin-btn h-12">0</button>
+                    <button onclick="checkPass()" class="pin-btn h-12 bg-pink-500 text-white hover:bg-pink-600"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Nhạc nền tự động -->
+    <audio id="bg-audio" src="./inlove.mp3" loop preload="auto"></audio>
+
+    <div id="hearts-container"></div>
+
+    <div class="max-w-4xl mx-auto px-4 py-8 relative z-10 space-y-16">
+
+        <!-- 1. HERO SECTION & COUNTER -->
+        <section class="text-center pt-8 pb-12 bg-white/40 backdrop-blur-md rounded-3xl p-6 shadow-xl border border-white/60">
+            <div class="inline-block p-3 bg-pink-100 rounded-full mb-4 animate-bounce">
+                <i class="fa-solid fa-heart text-pink-500 text-3xl"></i>
+            </div>
+            <h1 class="font-love text-5xl md:text-7xl font-bold text-pink-600 mb-2">
+                hành trình iuuuu nhauuuuu
+            </h1>
+            <p class="text-pink-800 font-medium text-lg md:text-xl max-w-lg mx-auto">
+                Mỗi ngày trôi qua bên em đều là những khoảnh khắc tuyệt vời nhất đối với anh ❤️
+            </p>
+
+            <div class="mt-8">
+                <p class="text-pink-700 font-semibold mb-4 text-sm uppercase tracking-wider">Chúng mình đã bên nhau được</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+                    <div class="bg-white/80 rounded-2xl p-4 shadow-md border border-pink-100">
+                        <span id="days" class="block text-3xl md:text-5xl font-bold text-pink-600">0</span>
+                        <span class="text-gray-500 text-xs md:text-sm font-medium">Ngày</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-4 shadow-md border border-pink-100">
+                        <span id="hours" class="block text-3xl md:text-5xl font-bold text-pink-600">0</span>
+                        <span class="text-gray-500 text-xs md:text-sm font-medium">Giờ</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-4 shadow-md border border-pink-100">
+                        <span id="minutes" class="block text-3xl md:text-5xl font-bold text-pink-600">0</span>
+                        <span class="text-gray-500 text-xs md:text-sm font-medium">Phút</span>
+                    </div>
+                    <div class="bg-white/80 rounded-2xl p-4 shadow-md border border-pink-100">
+                        <span id="seconds" class="block text-3xl md:text-5xl font-bold text-pink-600">0</span>
+                        <span class="text-gray-500 text-xs md:text-sm font-medium">Giây</span>
+                    </div>
+                </div>
+                <p class="mt-4 text-xs text-pink-500 italic">*Ngày bắt đầu: <span id="start-date-text">30/04/2026</span></p>
+            </div>
+        </section>
+
+        <!-- 2. PHẦN LỊCH TÌNH YÊU (CALENDAR 2026) -->
+        <section class="bg-stone-50/90 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-4 border-white relative overflow-hidden">
+            <div class="text-center mb-8 relative">
+                <span class="text-6xl md:text-8xl font-bold text-amber-900/10 absolute -top-8 left-1/2 -translate-x-1/2 tracking-widest pointer-events-none">2026</span>
+                <h2 class="font-love text-5xl md:text-6xl font-bold text-amber-900 relative z-10">Calendar 2026</h2>
+                <p class="text-xs text-amber-800 tracking-widest uppercase mt-1 font-semibold">Tình yêu qua từng tháng năm</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 px-2">
+                <div class="polaroid-frame -rotate-3 cursor-pointer" onclick="openModalPhoto('./h1.jpeg', './h1.jpg', 'Món quà trao em ❤️')">
+                    <div class="pin-gold"></div>
+                    <div class="h-36 md:h-44 overflow-hidden rounded">
+                        <img src="./h1.jpeg" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./h1.jpg';">
+                    </div>
+                </div>
+                <div class="polaroid-frame rotate-2 cursor-pointer" onclick="openModalPhoto('./h2.jpg', './h2.jpeg', 'Ngọt ngào bên nhau ✨')">
+                    <div class="pin-gold"></div>
+                    <div class="h-36 md:h-44 overflow-hidden rounded">
+                        <img src="./h2.jpg" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./h2.jpeg';">
+                    </div>
+                </div>
+                <div class="polaroid-frame -rotate-2 cursor-pointer" onclick="openModalPhoto('./h4.jpg', './h4.jpeg', 'Những ô ảnh ngập tràn hạnh phúc 💫')">
+                    <div class="pin-gold"></div>
+                    <div class="h-36 md:h-44 overflow-hidden rounded">
+                        <img src="./h4.jpg" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./h4.jpeg';">
+                    </div>
+                </div>
+                <div class="polaroid-frame rotate-3 cursor-pointer" onclick="openModalPhoto('./h6.jpeg', './h6.jpg', 'Góc chụp siêu dễ thương 💖')">
+                    <div class="pin-gold"></div>
+                    <div class="h-36 md:h-44 overflow-hidden rounded">
+                        <img src="./h6.jpeg" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='./h6.jpg';">
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 text-[10px] text-gray-700 bg-white/80 p-4 rounded-2xl shadow-inner border border-amber-100">
+                
+                <!-- Tháng 1 đến Tháng 12 -->
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">JANUARY 01</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span></span><span>1</span><span>2</span><span>3</span>
+                        <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                        <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+                        <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+                        <span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">FEBRUARY 02</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                        <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">MARCH 03</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                        <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                        <span>29</span><span>30</span><span>31</span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <!-- Tháng 4 -->
+                <div class="p-2 bg-pink-50/80 rounded-xl shadow-sm border-2 border-pink-400">
+                    <p class="font-bold text-pink-600 border-b border-pink-200 pb-1 mb-1 text-center">APRIL 04</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-pink-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                        <span>26</span><span>27</span><span>28</span><span>29</span>
+                        <div class="drawn-heart-container">
+                            <span class="text-rose-600 font-bold italic relative z-10">30</span>
+                            <svg class="drawn-heart-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50 85 C20 60, 5 40, 15 22 C23 8, 42 12, 50 28 C58 12, 77 8, 85 22 C95 40, 80 60, 50 85 Z" stroke="#e11d48" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">MAY 05</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span></span><span></span><span>1</span><span>2</span>
+                        <span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+                        <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span>
+                        <span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span>
+                        <span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span>
+                        <span>31</span><span></span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">JUNE 06</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+                        <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span>
+                        <span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+                        <span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span>
+                        <span>28</span><span>29</span><span>30</span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">JULY 07</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span>
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span>
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span>
+                        <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">AUGUST 08</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span></span><span></span><span></span><span>1</span>
+                        <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
+                        <span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+                        <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span>
+                        <span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span>
+                        <span>30</span><span>31</span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">SEPTEMBER 09</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                        <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                        <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                        <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                        <span>27</span><span>28</span><span>29</span><span>30</span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">OCTOBER 10</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span></span><span></span><span>1</span><span>2</span><span>3</span>
+                        <span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+                        <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span>
+                        <span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span>
+                        <span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">NOVEMBER 11</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span>
+                        <span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span>
+                        <span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span>
+                        <span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span>
+                        <span>29</span><span>30</span><span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                </div>
+
+                <div class="p-2 bg-white rounded-xl shadow-sm border border-stone-100">
+                    <p class="font-bold text-amber-900 border-b pb-1 mb-1 text-center">DECEMBER 12</p>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[8px] text-gray-400 font-bold mb-1">
+                        <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center font-mono text-[9px] leading-relaxed">
+                        <span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+                        <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                        <span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span>
+                        <span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span>
+                        <span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span></span><span></span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. INTERACTIVE LOVE LETTER -->
+        <section class="flex flex-col items-center justify-center py-6">
+            <h2 class="font-love text-4xl text-pink-600 mb-6 font-bold text-center">Bức Thư Tình Dành Cho Em 💌</h2>
+            
+            <div class="envelope-wrapper my-8" onclick="toggleEnvelope(this)">
+                <div class="envelope" id="envelope">
+                    <div class="envelope-pocket"></div>
+                    <div class="letter-content flex flex-col justify-between text-center overflow-hidden">
+                        <p class="font-love text-xl text-pink-600 font-bold">Gửi Công Chúa Của Anh!</p>
+                        <p class="text-xs text-gray-600 line-clamp-4">
+                            Cảm ơn em đã xuất hiện và làm thế giới của anh trở nên ngập tràn màu sắc. Nhấn vào bên dưới để đọc toàn bộ thư tình anh viết nhé...
+                        </p>
+                        <span class="text-[10px] text-pink-400 font-bold">Nhấn để mở / đóng thư</span>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="openFullLetter()" class="mt-6 bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-2.5 rounded-full shadow-lg hover:shadow-pink-300 transition duration-300 flex items-center space-x-2">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Đọc toàn bộ thư ở đây nè cục dàng</span>
+            </button>
+        </section>
+
+        <!-- 4. ALBUM KỶ NIỆM TỰ ĐỘNG CHẠY NGANG -->
+        <section>
+            <div class="text-center mb-4">
+                <h2 class="font-love text-4xl text-pink-600 font-bold">Album Kỷ Niệm Đáng Yêu 📸</h2>
+                <p class="text-pink-800 text-sm mt-1">Các thẻ ảnh tự động chạy ngang liên tục (rê chuột để tạm dừng) ✨</p>
+            </div>
+
+            <div class="marquee-wrapper">
+                <div class="marquee-track">
+                    
+                    <!-- DANH SÁCH TOÀN BỘ ÁNH THỰC TẾ TRONG TỆP CỦA BẠN (h1 - h7) -->
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h1.jpeg', './h1.jpg', 'Món quà trao em ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h1.jpeg" alt="Kỷ niệm 1" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h1.jpg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Món quà trao em ❤️</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h2.jpg', './h2.jpeg', 'Mình cùng nhau chụp ptb nèe ✨')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h2.jpg" alt="Kỷ niệm 2" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h2.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Mình cùng nhau chụp ptb nèe ✨</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h3.jpg', './h3.jpeg', 'Anh với em lúc nhỏ ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h3.jpg" alt="Kỷ niệm 3" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h3.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Anh với em lúc nhỏ ❤️</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h4.jpg', './h4.jpeg', 'Ngập tràn hạnh phúc ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h4.jpg" alt="Kỷ niệm 4" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h4.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Ngập tràn hạnh phúc ❤️</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h5.jpeg', './h5.jpg', 'Đáng yêu 🤪')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h5.jpeg" alt="Kỷ niệm 5" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h5.jpg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Đáng yêu 🤪</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h6.jpeg', './h6.jpg', 'Góc chụp siêu dễ thương 💖')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h6.jpeg" alt="Kỷ niệm 6" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h6.jpg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Góc chụp siêu dễ thương 💖</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h7.jpeg', './h7.jpg', 'Tuổi thơ hồn nhiên 🐎')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h7.jpeg" alt="Kỷ niệm 7" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h7.jpg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Tuổi thơ hồn nhiên 🐎</p>
+                    </div>
+
+                    <!-- DUPLICATE FOR INFINITE LOOP -->
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h1.jpeg', './h1.jpg', 'Món quà trao em ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h1.jpeg" alt="Kỷ niệm 1" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h1.jpg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Món quà trao em ❤️</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h2.jpg', './h2.jpeg', 'Mình cùng nhau chụp ptb nèe ✨')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h2.jpg" alt="Kỷ niệm 2" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h2.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Mình cùng nhau chụp ptb nèe ✨</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h3.jpg', './h3.jpeg', 'Anh với em lúc nhỏ ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h3.jpg" alt="Kỷ niệm 3" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h3.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Anh với em lúc nhỏ ❤️</p>
+                    </div>
+
+                    <div class="marquee-card flex flex-col items-center justify-between" onclick="openModalPhoto('./h4.jpg', './h4.jpeg', 'Ngập tràn hạnh phúc ❤️')">
+                        <div class="w-full h-72 rounded-2xl overflow-hidden bg-pink-50">
+                            <img src="./h4.jpg" alt="Kỷ niệm 4" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='./h4.jpeg';">
+                        </div>
+                        <p class="font-love text-xl text-pink-600 mt-2 text-center">Ngập tràn hạnh phúc ❤️</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. REASONS WHY I LOVE YOU -->
+        <section>
+            <div class="text-center mb-8">
+                <h2 class="font-love text-4xl text-pink-600 font-bold">Lý Do Anh Yêu Em 💕</h2>
+                <p class="text-pink-800 text-sm mt-1">Chạm vào mỗi thẻ để khám phá điều tuyệt vời từ em nhé!</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                <div class="flip-card h-48 cursor-pointer perspective">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-lg border border-pink-100">
+                        <div class="flip-card-front absolute w-full h-full bg-white rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                            <i class="fa-solid fa-face-smile-beam text-4xl text-pink-400 mb-2"></i>
+                            <h3 class="font-bold text-gray-700">Điều thứ nhất</h3>
+                            <p class="text-xs text-pink-500 mt-1">Nhấn để lật mặt sau ✨</p>
+                        </div>
+                        <div class="flip-card-back absolute w-full h-full bg-gradient-to-br from-pink-400 to-rose-400 text-white rounded-2xl flex items-center justify-center p-6 text-center">
+                            <p class="text-sm font-medium">Nụ cười của em luôn làm bừng sáng cả ngày dài mệt mỏi của anh!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card h-48 cursor-pointer perspective">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-lg border border-pink-100">
+                        <div class="flip-card-front absolute w-full h-full bg-white rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                            <i class="fa-solid fa-hand-holding-heart text-4xl text-pink-400 mb-2"></i>
+                            <h3 class="font-bold text-gray-700">Điều thứ hai</h3>
+                            <p class="text-xs text-pink-500 mt-1">Nhấn để lật mặt sau ✨</p>
+                        </div>
+                        <div class="flip-card-back absolute w-full h-full bg-gradient-to-br from-pink-400 to-rose-400 text-white rounded-2xl flex items-center justify-center p-6 text-center">
+                            <p class="text-sm font-medium">Em siuu dễ thương, xinh đẹp và biết lắng nghe những tâm sự của anh.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card h-48 cursor-pointer perspective">
+                    <div class="flip-card-inner relative w-full h-full rounded-2xl shadow-lg border border-pink-100">
+                        <div class="flip-card-front absolute w-full h-full bg-white rounded-2xl flex flex-col items-center justify-center p-4 text-center">
+                            <i class="fa-solid fa-wand-magic-sparkles text-4xl text-pink-400 mb-2"></i>
+                            <h3 class="font-bold text-gray-700">Điều thứ ba</h3>
+                            <p class="text-xs text-pink-500 mt-1">Nhấn để lật mặt sau ✨</p>
+                        </div>
+                        <div class="flip-card-back absolute w-full h-full bg-gradient-to-br from-pink-400 to-rose-400 text-white rounded-2xl flex items-center justify-center p-6 text-center">
+                            <p class="text-sm font-medium">Sự dễ thương tự nhiên của em khiến anh yêu mãi không ngừng!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SURPRISE SECRET BUTTON -->
+        <section class="text-center py-8">
+            <div class="bg-white/40 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white/60">
+                <h3 class="font-love text-3xl text-pink-600 font-bold mb-3">Em có tò mò về điều bí mật không? 🎁</h3>
+                <p class="text-gray-700 text-sm mb-6">Anh đã giấu một bất ngờ nhỏ ở ngay nút bấm dưới đây!</p>
+
+                <div class="secret-btn-container">
+                    <button id="secret-btn" onmouseover="moveSecretBtn()" onclick="triggerSurprise()" class="px-8 py-4 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold text-lg rounded-full shadow-lg hover:shadow-pink-400/50 transition-all duration-300 animate-pulse cursor-pointer">
+                        <i class="fa-solid fa-gift mr-2"></i> Nhấn Vào Đây Để Xem Bí Mật Nèe ❤️
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. VƯỜN HOA ĐÊM LUNG LINH (NIGHT GARDEN TIKTOK STYLE) -->
+        <section id="night-garden-section" class="my-12 p-6 flex flex-col justify-between items-center">
+            
+            <div class="text-center z-10 pt-4">
+                <h2 class="font-love text-4xl md:text-5xl text-pink-300 font-bold drop-shadow-[0_0_10px_rgba(244,143,177,0.8)]">
+                    Khu Vườn Đêm Lấp Lánh ✨
+                </h2>
+                <p class="text-pink-200/80 text-xs md:text-sm mt-1">Gửi gắm những lời thương yêu rơi nhẹ giữa trời đêm...</p>
+            </div>
+
+            <!-- MENU ĐIỀU KHIỂN NỔI -->
+            <div class="garden-menu">
+                <button class="menu-btn" onclick="toggleGardenSettings()" title="Cài đặt lời nhắn">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="menu-btn" onclick="toggleMusic()" title="Bật/Tắt nhạc">
+                    <i class="fa-solid fa-music"></i>
+                </button>
+                <button class="menu-btn" onclick="addCustomMsg()" title="Thêm tin nhắn">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </button>
+            </div>
+
+            <!-- VƯỜN HOA NỀN SVG -->
+            <div class="w-full flex justify-center items-end relative z-10 min-h-[350px]">
+                <svg class="w-full max-w-lg h-auto" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 400 Q100 320 200 400 Q300 330 500 400 L500 400 L0 400 Z" fill="#064e3b" opacity="0.6"/>
+                    <path d="M-50 400 Q80 340 180 400 Q280 350 550 400 L550 400 L-50 400 Z" fill="#022c22" opacity="0.8"/>
+
+                    <!-- Hoa 1 -->
+                    <path d="M120 400 Q130 280 160 200" stroke="#15803d" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M135 320 Q100 300 90 280 Q120 290 140 310" fill="#22c55e"/>
+                    <path d="M150 250 Q180 230 190 210 Q160 220 148 240" fill="#22c55e"/>
+                    <g transform="translate(160, 180)">
+                        <circle cx="0" cy="0" r="28" fill="#f43f5e" opacity="0.3" class="animate-pulse"/>
+                        <path d="M-18 5 C-25 -15 0 -30 18 5 C10 25 -10 25 -18 5 Z" fill="#ec407a"/>
+                        <path d="M-10 0 C-15 -10 0 -20 10 0 C5 15 -5 15 -10 0 Z" fill="#f472b6"/>
+                        <circle cx="0" cy="-2" r="5" fill="#fde047"/>
+                    </g>
+
+                    <!-- Hoa 2 -->
+                    <path d="M250 400 Q240 230 250 120" stroke="#166534" stroke-width="8" stroke-linecap="round"/>
+                    <path d="M248 300 Q200 280 180 250 Q220 260 246 290" fill="#15803d"/>
+                    <path d="M252 220 Q300 200 320 170 Q280 180 250 210" fill="#15803d"/>
+                    <g transform="translate(250, 100)">
+                        <circle cx="0" cy="0" r="40" fill="#fb7185" opacity="0.35" class="animate-ping"/>
+                        <circle cx="0" cy="0" r="30" fill="#f43f5e" opacity="0.4"/>
+                        <path d="M-25 8 C-35 -20 0 -40 25 8 C15 35 -15 35 -25 8 Z" fill="#e11d48"/>
+                        <path d="M-15 2 C-20 -12 0 -28 15 2 C8 20 -8 20 -15 2 Z" fill="#f43f5e"/>
+                        <path d="M-8 0 C-10 -8 0 -16 8 0 C4 10 -4 10 -8 0 Z" fill="#fb7185"/>
+                        <circle cx="0" cy="-2" r="7" fill="#fef08a"/>
+                    </g>
+
+                    <!-- Hoa 3 -->
+                    <path d="M380 400 Q360 290 340 190" stroke="#15803d" stroke-width="6" stroke-linecap="round"/>
+                    <path d="M365 310 Q400 290 410 270 Q380 280 360 300" fill="#22c55e"/>
+                    <path d="M350 240 Q320 220 310 200 Q340 210 352 230" fill="#22c55e"/>
+                    <g transform="translate(335, 175)">
+                        <circle cx="0" cy="0" r="28" fill="#f43f5e" opacity="0.3" class="animate-pulse"/>
+                        <path d="M-18 5 C-25 -15 0 -30 18 5 C10 25 -10 25 -18 5 Z" fill="#ec407a"/>
+                        <path d="M-10 0 C-15 -10 0 -20 10 0 C5 15 -5 15 -10 0 Z" fill="#f472b6"/>
+                        <circle cx="0" cy="-2" r="5" fill="#fde047"/>
+                    </g>
+                </svg>
+            </div>
+
+            <div id="floating-container" class="absolute inset-0 pointer-events-none overflow-hidden z-20"></div>
+
+        </section>
+
+        <footer class="text-center text-pink-800 text-xs py-4">
+            <p>Mãi yêu em ❤️</p>
+        </footer>
+
+    </div>
+
+    <!-- MODAL CÀI ĐẶT LỜI NHẮN -->
+    <div id="garden-settings-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-slate-900 border border-pink-500/30 rounded-3xl p-6 text-white shadow-2xl relative">
+            <h3 class="font-love text-3xl text-pink-400 font-bold mb-4 text-center">Cài Đặt Lời Nhắn ✨</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-pink-300 mb-1">Đổi Icon bong bóng:</label>
+                    <input id="icon-input" type="text" value="💖" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-sm text-pink-300 focus:outline-none focus:border-pink-500">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-pink-300 mb-1">Lời nhắn (ngăn cách bằng dấu phẩy):</label>
+                    <textarea id="msgs-input" rows="4" class="w-full bg-slate-800 border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-pink-500">Anh yêu em, I love you, Em là duy nhất, Thương em, Always with you, Mãi bên nhau nhé, Sẽ mãi yêu em, You are my everything, My heart belongs to you</textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-3 mt-6">
+                <button onclick="toggleGardenSettings()" class="px-5 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-xs font-semibold">Đóng</button>
+                <button onclick="saveGardenSettings()" class="px-5 py-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 rounded-full text-xs font-semibold shadow-lg">Lưu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHOTO PREVIEW MODAL -->
+    <div id="photo-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4" onclick="closePhotoModal()">
+        <div class="max-w-3xl w-full bg-white rounded-2xl p-4 overflow-hidden shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closePhotoModal()" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 w-8 h-8 rounded-full flex items-center justify-center z-10">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <img id="modal-img" src="" alt="Enlarged Memory" class="w-full max-h-[75vh] object-contain rounded-xl">
+            <p id="modal-caption" class="text-center font-love text-2xl text-pink-600 mt-3"></p>
+        </div>
+    </div>
+
+    <!-- FULL LETTER MODAL -->
+    <div id="letter-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4">
+        <div class="max-w-lg w-full bg-pink-50 rounded-3xl p-6 md:p-8 shadow-2xl border-2 border-pink-200 relative max-h-[85vh] overflow-y-auto">
+            <button onclick="closeFullLetter()" class="absolute top-4 right-4 bg-pink-200 hover:bg-pink-300 text-pink-800 w-8 h-8 rounded-full flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="font-love text-3xl text-pink-600 font-bold mb-4 text-center">Thư Tình Cảm Anh Dành Choa Em 💌</h3>
+            <div class="text-gray-700 text-sm leading-relaxed space-y-4">
+                <p>Chào em yêu,</p>
+                <p>Mỗi ngày được trò chuyện, được nhìn thấy nụ cười của em là món quà tuyệt vời nhất mà cuộc sống dành tặng cho anh. Em không chỉ là công chúa của anh, mà còn là tri kỷ, là nguồn động lực lớn nhất của anh.</p>
+                <p>Cảm ơn em đã luôn kiên nhẫn, yêu thương và ở bên anh trong suốt khoảng thời gian qua. Anh hứa sẽ luôn trân trọng, chăm sóc và mang lại thật nhiều niềm vui cho em trong tương lai.</p>
+                <p>Yêu em nhiều hơn mỗi ngày! ❤️</p>
+                <p class="text-right font-love text-xl text-pink-600 font-bold mt-4">Mãi yêu em!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECRET SURPRISE MODAL -->
+    <div id="surprise-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white rounded-3xl p-6 text-center shadow-2xl relative transform scale-95 transition duration-300 border-4 border-pink-200" id="surprise-box">
+            <div class="w-20 h-20 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 text-pink-500 text-4xl animate-bounce">
+                👑
+            </div>
+            <h3 class="font-love text-3xl text-pink-600 font-bold mb-2">Em Là Công Chúa Của Anh!</h3>
+            <p class="text-gray-600 text-sm mb-6 leading-relaxed">
+                Làm nụ cười trên môi em luôn rạng rỡ là nhiệm vụ quan trọng nhất đời anh. Cho dù có chuyện gì xảy ra, anh sẽ luôn đứng đằng sau bảo vệ và yêu thương em! 💖
+            </p>
+            <button onclick="closeSurpriseModal()" class="px-8 py-3 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold rounded-full shadow-lg hover:shadow-pink-300 transition duration-300">
+                Cảm ơn anh yêu 🥰
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* 0. LOCKSCREEN PASSWORD LOGIC (PASS = 0804) */
+        let inputPass = '';
+        const correctPass = '0804';
+
+        function pressNum(num) {
+            if (inputPass.length < 4) {
+                inputPass += num;
+                updatePassDisplay();
+            }
+            if (inputPass.length === 4) {
+                checkPass();
+            }
+        }
+
+        function clearNum() {
+            inputPass = '';
+            document.getElementById('pass-error').innerText = '';
+            updatePassDisplay();
+        }
+
+        function updatePassDisplay() {
+            document.getElementById('pass-dots').innerText = '•'.repeat(inputPass.length);
+        }
+
+        function checkPass() {
+            if (inputPass === correctPass) {
+                document.getElementById('lockscreen').classList.add('opacity-0', 'pointer-events-none');
+                setTimeout(() => {
+                    document.getElementById('lockscreen').style.display = 'none';
+                }, 500);
+                
+                playMusic();
+
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            } else {
+                document.getElementById('pass-error').innerText = 'Mật khẩu chưa đúng rồi công chúa ơi! 💔';
+                inputPass = '';
+                setTimeout(updatePassDisplay, 500);
+            }
+        }
+
+        /* 1. LOVE DAYS COUNTER SCRIPT */
+        const startDate = new Date(2026, 3, 30, 0, 0, 0);
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / 1000 / 60) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('days').innerText = days;
+            document.getElementById('hours').innerText = hours;
+            document.getElementById('minutes').innerText = minutes;
+            document.getElementById('seconds').innerText = seconds;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
+
+        /* 2. FLOATING HEARTS GENERATOR */
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            const heartIcons = ['❤️', '💖', '💕', '💗', '🌸'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerText = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        /* 3. ENVELOPE TOGGLE */
+        function toggleEnvelope(element) {
+            const env = document.getElementById('envelope');
+            env.classList.toggle('open');
+        }
+
+        /* 4. PHOTO PREVIEW MODAL */
+        function openModalPhoto(primarySrc, fallbackSrc, caption) {
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = primarySrc;
+            modalImg.onerror = function() {
+                this.onerror = null;
+                this.src = fallbackSrc;
+            };
+            document.getElementById('modal-caption').innerText = caption;
+            document.getElementById('photo-modal').classList.remove('hidden');
+        }
+
+        function closePhotoModal() {
+            document.getElementById('photo-modal').classList.add('hidden');
+        }
+
+        /* 5. FULL LETTER MODAL */
+        function openFullLetter() {
+            document.getElementById('letter-modal').classList.remove('hidden');
+        }
+        function closeFullLetter() {
+            document.getElementById('letter-modal').classList.add('hidden');
+        }
+
+        /* 6. SURPRISE FIREWORKS & SECRET BUTTON */
+        let secretMoveCount = 0;
+        function moveSecretBtn() {
+            if (secretMoveCount < 2) {
+                const btn = document.getElementById('secret-btn');
+                const randomX = (Math.random() - 0.5) * 200;
+                const randomY = (Math.random() - 0.5) * 60;
+                btn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                secretMoveCount++;
+            }
+        }
+
+        function triggerSurprise() {
+            const btn = document.getElementById('secret-btn');
+            btn.style.transform = `translate(0, 0)`;
+
+            const duration = 3 * 1000;
+            const animationEnd = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 7,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#f48fb1', '#ec407a', '#e91e63', '#ffb74d']
+                });
+                confetti({
+                    particleCount: 7,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#f48fb1', '#ec407a', '#e91e63', '#ffb74d']
+                });
+
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+
+            setTimeout(() => {
+                document.getElementById('surprise-modal').classList.remove('hidden');
+            }, 300);
+        }
+
+        function closeSurpriseModal() {
+            document.getElementById('surprise-modal').classList.add('hidden');
+        }
+
+        /* 7. AUTOPLAY MUSIC LOGIC */
+        const audio = document.getElementById('bg-audio');
+
+        function playMusic() {
+            if (audio && audio.paused) {
+                audio.play().catch(() => {});
+            }
+        }
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+            } else {
+                audio.pause();
+            }
+        }
+
+        /* 8. SCRIPT CHO NIGHT GARDEN */
+        const gardenSection = document.getElementById('night-garden-section');
+        const floatContainer = document.getElementById('floating-container');
+
+        function initFireflies() {
+            for (let i = 0; i < 25; i++) {
+                const fly = document.createElement('div');
+                fly.className = 'firefly';
+                fly.style.left = Math.random() * 100 + '%';
+                fly.style.top = Math.random() * 100 + '%';
+                fly.style.animationDelay = (Math.random() * 8) + 's';
+                fly.style.animationDuration = (Math.random() * 6 + 6) + 's';
+                gardenSection.appendChild(fly);
+            }
+        }
+        initFireflies();
+
+        let currentMessages = [
+            "Anh yêu em", "I love you", "Em là duy nhất", "Thương em", 
+            "Always with you", "Mãi bên nhau nhé", "Sẽ mãi yêu em", 
+            "You are my everything", "My heart belongs to you"
+        ];
+        
+        /* TẤT CẢ CÁC ẢNH SẴN CÓ TRONG THƯ MỤC CỦA BẠN */
+        const samplePhotos = [
+            './h1.jpeg', './h2.jpg', './h3.jpg', 
+            './h4.jpg', './h5.jpeg', './h6.jpeg', 
+            './h7.jpeg', './h8.jpeg'
+        ];
+
+        function spawnBubble() {
+            if (!floatContainer) return;
+            const bubble = document.createElement('div');
+            bubble.className = 'msg-bubble';
+            const randomMsg = currentMessages[Math.floor(Math.random() * currentMessages.length)];
+            bubble.innerText = randomMsg;
+            
+            const randomLeft = Math.random() * 75 + 10;
+            bubble.style.left = randomLeft + '%';
+            bubble.style.bottom = '-10%';
+            bubble.style.animationDuration = (Math.random() * 4 + 8) + 's';
+
+            bubble.onclick = function() {
+                confetti({
+                    particleCount: 30,
+                    spread: 60,
+                    origin: { y: 0.8 }
+                });
+                bubble.remove();
+            };
+
+            floatContainer.appendChild(bubble);
+            setTimeout(() => { bubble.remove(); }, 13000);
+        }
+
+        function spawnFloatingPhoto() {
+            if (!floatContainer) return;
+            const img = document.createElement('img');
+            img.className = 'floating-photo';
+            const primarySrc = samplePhotos[Math.floor(Math.random() * samplePhotos.length)];
+            img.src = primarySrc;
+            
+            // Xử lý đệm trường hợp ảnh hX.jpeg và hX.jpg
+            img.onerror = function() {
+                this.onerror = null;
+                if (primarySrc.endsWith('.jpeg')) {
+                    this.src = primarySrc.replace('.jpeg', '.jpg');
+                } else if (primarySrc.endsWith('.jpg')) {
+                    this.src = primarySrc.replace('.jpg', '.jpeg');
+                }
+            };
+
+            const randomLeft = Math.random() * 75 + 10;
+            img.style.left = randomLeft + '%';
+            img.style.bottom = '-10%';
+            img.style.animationDuration = (Math.random() * 4 + 10) + 's';
+
+            img.onclick = function() {
+                openModalPhoto(img.src, img.src, 'Kỷ niệm yêu thương ❤️');
+            };
+
+            floatContainer.appendChild(img);
+            setTimeout(() => { img.remove(); }, 15000);
+        }
+
+        setInterval(spawnBubble, 2200);
+        setInterval(spawnFloatingPhoto, 4000);
+
+        function toggleGardenSettings() {
+            const modal = document.getElementById('garden-settings-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function saveGardenSettings() {
+            const inputVal = document.getElementById('msgs-input').value;
+            if (inputVal.trim()) {
+                currentMessages = inputVal.split(',').map(s => s.trim()).filter(Boolean);
+            }
+            toggleGardenSettings();
+        }
+
+        function addCustomMsg() {
+            const newMsg = prompt("Nhập lời nhắn yêu thương mới của bạn:");
+            if (newMsg && newMsg.trim()) {
+                currentMessages.push(newMsg.trim());
+                spawnBubble();
+            }
+        }
+    </script>
+</body>
+</html>
